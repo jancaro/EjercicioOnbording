@@ -1,0 +1,39 @@
+<div class="center-container">
+  <form class="form-register" [formGroup]="loginForm">
+    <h2 class="form-title">Iniciar Sesión</h2>
+    <hr class="form-hr">
+
+    <div class="form-div">
+      <label for="username">Nombre de usuario</label>
+      <input id="username" type="text" formControlName="username" [ngClass]="{'input-error' : username.touched && (username.errors || existUsername === false)}"
+             placeholder="Ej. makoto" (blur)="verifyUsername()">
+      <div *ngIf="username.touched && username.invalid">
+        <span class="text-error">Nombre de usuario es requerido</span>
+      </div>
+      <div *ngIf="username.touched && existUsername === false">
+        <span class="text-error">Nombre de usuario no existe</span>
+      </div>
+    </div>
+
+    <div class="form-div">
+      <label for="password">Contraseña</label>
+      <input id="password" type="password" formControlName="password"
+             [ngClass]="{'input-error' : password.errors && password.touched}"
+             placeholder="****">
+      <div *ngIf="password.touched && password.invalid">
+        <span class="text-error">Contraseña requerida</span>
+      </div>
+      <div *ngIf="password.touched && password.errors?.['pattern']">
+        <span class="text-error">Debe tener al menos un caracter especial, una mayúscula, una minúscula y un dígito</span>
+      </div>
+    </div>
+
+    <div class="form-footer">
+      <a routerLink="/register">Registrar</a>
+      <pichincha-button size="small" id="idButton" color="primary" [disabled]="existUsername === false || loginForm.invalid"
+                        (clickbutton)="login()">
+        Iniciar Sesión
+      </pichincha-button>
+    </div>
+  </form>
+</div>

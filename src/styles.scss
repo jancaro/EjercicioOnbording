@@ -1,1 +1,99 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+  margin: 0;
+}
+
+.medium-div {
+  width: 50%;
+}
+
+.text-bold {
+  font-weight: bold;
+}
+
+.center-container {
+  padding: 0 40%;
+}
+
+.div-center {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.library-header {
+  background-color: #f4f0f061;
+  height: 50px;
+  align-items: center;
+
+  span {
+    margin: 0px 5px;
+  }
+}
+
+.library-container {
+  background: gainsboro;
+
+  div {
+    margin: 7px;
+    background: whitesmoke;
+  }
+
+  div:hover img {
+    opacity: 0.5;
+  }
+}
+
+.library-margin {
+  margin: 15px 10px;
+}
+
+.form-register {
+  border: solid 1px gray;
+}
+
+.form-title {
+  padding: 5px 7px;
+  margin: 0;
+}
+
+.form-hr {
+  margin: 3px 7px;
+}
+
+.form-div {
+  display: flex;
+  flex-direction: column;
+  padding: 5px 7px;
+
+  label {
+    padding: 3px 0;
+  }
+
+  input {
+    margin-bottom: 5px;
+  }
+}
+
+.form-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #f3ecec;
+
+  a {
+    margin: 12px 5px;
+  }
+
+  pichincha-button {
+    margin: 5px;
+  }
+}
+
+.text-error {
+  color: red;
+}
+
+.input-error {
+  border: solid 1px red;
+}

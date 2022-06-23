@@ -1,0 +1,21 @@
+<div class="div-center library-header">
+  <span>Biblioteca</span>
+  <span class="text-bold">Usuario</span>
+</div>
+<div class="div-center library-margin">
+  <span>Tus Libros</span>
+  <pichincha-button size="small" id="idButtonAddBook" color="secondary">
+    Agregar Libro
+  </pichincha-button>
+</div>
+<div class="div-center library-margin">
+  <input placeholder="Ej. Angular, React">
+  <select>
+    <option *ngFor="let category of categoriesList;">{{category.description}}</option>
+  </select>
+</div>
+<div class="div-center library-container">
+  <div *ngFor="let book of myBooksList;">
+    <img [src]="book.image" width="300" height="350">
+  </div>
+</div>
