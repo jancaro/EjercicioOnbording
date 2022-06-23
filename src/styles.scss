@@ -1,9 +1,17 @@
 body {
-  margin: 0;
+  margin: 0 0 15px 0;
 }
 
 .medium-div {
   width: 50%;
+}
+
+.title {
+  font-size: larger;
+}
+
+.padding-title {
+  padding-bottom: 15px !important;
 }
 
 .text-bold {
@@ -12,6 +20,30 @@ body {
 
 .center-container {
   padding: 0 40%;
+}
+
+.center-book-container {
+  padding: 0 50px;
+}
+
+.center-book-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+
+  pichincha-button {
+    margin: 5px;
+  }
+}
+
+.center-book-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+
+  pichincha-button {
+    margin: 5px;
+  }
 }
 
 .div-center {
@@ -55,6 +87,7 @@ body {
 .form-title {
   padding: 5px 7px;
   margin: 0;
+  font-size: larger;
 }
 
 .form-hr {
@@ -64,6 +97,20 @@ body {
 .form-div {
   display: flex;
   flex-direction: column;
+  padding: 5px 7px;
+
+  label {
+    padding: 3px 0;
+  }
+
+  input {
+    margin-bottom: 5px;
+  }
+}
+
+.form-div-checkbox {
+  display: flex;
+  flex-direction: row;
   padding: 5px 7px;
 
   label {
@@ -92,6 +139,10 @@ body {
 
 .text-error {
   color: red;
+}
+
+.text-note {
+  color: gray;
 }
 
 .input-error {

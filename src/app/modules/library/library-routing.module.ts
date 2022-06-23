@@ -1,11 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {PrivateLibraryComponent} from "./private-library/private-library.component";
+import {RegisterBookComponent} from "./register-book/register-book.component";
+import {ViewBookComponent} from "./view-book/view-book.component";
 
 const routes: Routes = [
   {
     path: 'private',
     component: PrivateLibraryComponent
+  },
+  {
+    path: 'book/register',
+    component: RegisterBookComponent
+  },
+  {
+    path: 'book/view',
+    component: ViewBookComponent
   }
 ];
 

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {CategoryService} from "../../../services/category/category.service";
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {LibraryService} from "../../../services/libray/library.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-private-library',
@@ -16,7 +17,8 @@ export class PrivateLibraryComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private categoryService: CategoryService,
-              private libraryService: LibraryService) {
+              private libraryService: LibraryService,
+              private router: Router) {
     this.buildForm();
   }
 
@@ -27,9 +29,13 @@ export class PrivateLibraryComponent implements OnInit {
 
   buildForm() {
     this.filterForm = this.fb.group({
-      title: ['', Validators.required],
-      category: this.fb.array([])
+      title: [''],
+      category: ['']
     });
+  }
+
+  addBook() {
+    this.router.navigate(['/library/book/register']);
   }
 
   getCategories() {
@@ -38,6 +44,12 @@ export class PrivateLibraryComponent implements OnInit {
 
   getBooks() {
     const body = this.filterForm.getRawValue();
+    this.libraryService.getFilterBooks(body).subscribe(result => this.myBooksList = result.items);
+  }
+
+  filterBooks() {
+    const body = this.filterForm.getRawValue();
+    console.log('***************************' + body);
     this.libraryService.getFilterBooks(body).subscribe(result => this.myBooksList = result.items);
   }
 }

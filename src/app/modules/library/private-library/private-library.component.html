@@ -1,18 +1,17 @@
-<div class="div-center library-header">
-  <span>Biblioteca</span>
-  <span class="text-bold">Usuario</span>
-</div>
+<app-library-header></app-library-header>
 <div class="div-center library-margin">
   <span>Tus Libros</span>
-  <pichincha-button size="small" id="idButtonAddBook" color="secondary">
+  <pichincha-button size="small" id="idButtonAddBook" color="secondary" (click)="addBook()">
     Agregar Libro
   </pichincha-button>
 </div>
-<div class="div-center library-margin">
-  <input placeholder="Ej. Angular, React">
-  <select>
-    <option *ngFor="let category of categoriesList;">{{category.description}}</option>
-  </select>
+<div>
+  <form class="div-center library-margin" [formGroup]="filterForm">
+    <input id="title" type="text" formControlName="title" placeholder="Ej. Angular, React" (blur)="filterBooks()">
+    <select id="category" type="text" formControlName="category" (blur)="filterBooks()">
+      <option *ngFor="let category of categoriesList;">{{category.description}}</option>
+    </select>
+  </form>
 </div>
 <div class="div-center library-container">
   <div *ngFor="let book of myBooksList;">

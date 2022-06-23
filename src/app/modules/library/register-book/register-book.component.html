@@ -1,0 +1,77 @@
+<app-library-header></app-library-header>
+<div class="div-center library-margin center-book-container">
+  <span class="title text-bold">Registro Libro</span>
+</div>
+<div class="center-book-container">
+  <form class="div-center" [formGroup]="registerBookForm">
+    <div class="medium-div">
+      <div class="form-div">
+        <label for="title">Nombre del libro</label>
+        <input id="title" type="text" formControlName="title" [ngClass]="{'input-error' : title.errors && title.touched}"
+               placeholder="Ej. Angular + NGRX">
+        <div *ngIf="title.touched && title.invalid">
+          <span class="text-error">Nombre del libro es requerido</span>
+        </div>
+      </div>
+      <div class="form-div">
+        <label for="url">URL del libro</label>
+        <input id="url" type="text" formControlName="url" [ngClass]="{'input-error' : url.errors && url.touched}"
+               placeholder="Ej. https://books-all.com/sabhjxm2kk">
+        <div *ngIf="url.touched && url.invalid">
+          <span class="text-error">URL del libro es requerido</span>
+        </div>
+      </div>
+      <div class="form-div">
+        <label for="resume">Resumen del libro</label>
+        <textarea id="resume" formControlName="resume" [ngClass]="{'input-error' : resume.errors && resume.touched}"
+                  placeholder="Ej. ..." rows="4" cols="50"></textarea>
+        <div *ngIf="resume.touched && resume.invalid">
+          <span class="text-error">Resumen del libro es requerido</span>
+        </div>
+      </div>
+    </div>
+    <div class="medium-div">
+      <div class="form-div">
+        <label for="author">Nombre del autor</label>
+        <input id="author" type="text" formControlName="author" [ngClass]="{'input-error' : author.errors && author.touched}"
+               placeholder="Ej. Kevin Suárez">
+        <div *ngIf="author.touched && author.invalid">
+          <span class="text-error">Nombre del autor es requerido</span>
+        </div>
+      </div>
+      <div class="form-div">
+        <label for="image">Imagen de portada</label>
+        <input id="image" type="text" formControlName="image" [ngClass]="{'input-error' : image.errors && image.touched}"
+               placeholder="Ej. https://books-all.com/sabhjxm2kk/img">
+        <div *ngIf="image.touched && image.invalid">
+          <span class="text-error">Imagen de portada es requerido</span>
+        </div>
+      </div>
+      <div class="form-div-checkbox">
+        <input id="public" type="checkbox" formControlName="public">
+        <label for="public">Publicar</label>
+      </div>
+    </div>
+    <div class="form-div">
+      <label class="form-title padding-title text-bold">Categorías</label>
+      <div class="div-center">
+        <div style="width: 150px; height: 50px;" *ngFor="let category of categoriesList; let i = index">
+          <input id="category-{{i}}" type="checkbox" (change)="changeCategory(category.id, $event)">
+          <label for="category-{{i}}">{{category.description}}</label>
+        </div>
+      </div>
+      <div *ngIf="category.value.length < 3">
+        <span class="text-note">Debe seleccionar al menos 3 categorías</span>
+      </div>
+    </div>
+  </form>
+  <div class="center-book-footer">
+    <pichincha-button size="small" id="idButton" color="secondary" (clickbutton)="cancel()">
+      Cancelar
+    </pichincha-button>
+    <pichincha-button size="small" id="idButton" color="primary" [disabled]="registerBookForm.invalid || category.value.length < 3"
+                      (clickbutton)="registerBook()">
+      Registrar
+    </pichincha-button>
+  </div>
+</div>
