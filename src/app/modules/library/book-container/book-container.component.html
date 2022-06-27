@@ -1,1 +1,5 @@
-<p>book-container works!</p>
+<div class="div-center library-container">
+  <div *ngFor="let book of myBooks;">
+    <app-book-card [bookModel]="book" (clickEvent)="clickImg($event)"></app-book-card>
+  </div>
+</div>

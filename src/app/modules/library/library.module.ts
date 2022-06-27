@@ -9,6 +9,8 @@ import { BookCardComponent } from './book-card/book-card.component';
 import { BookContainerComponent } from './book-container/book-container.component';
 import { RegisterBookComponent } from './register-book/register-book.component';
 import { ViewBookComponent } from './view-book/view-book.component';
+import {CategoryModule} from "../category/category.module";
+import { BookFormComponent } from './book-form/book-form.component';
 
 
 @NgModule({
@@ -18,13 +20,15 @@ import { ViewBookComponent } from './view-book/view-book.component';
     BookCardComponent,
     BookContainerComponent,
     RegisterBookComponent,
-    ViewBookComponent
+    ViewBookComponent,
+    BookFormComponent
   ],
   imports: [
     CommonModule,
     LibraryRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    CategoryModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

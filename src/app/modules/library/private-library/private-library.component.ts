@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CategoryService} from "../../../services/category/category.service";
-import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup} from "@angular/forms";
 import {LibraryService} from "../../../services/libray/library.service";
 import {Router} from "@angular/router";
+import {Subscription} from "rxjs";
+import {AutoUnsubscribe} from "ngx-auto-unsubscribe-decorator";
 
 @Component({
   selector: 'app-private-library',
@@ -11,26 +13,40 @@ import {Router} from "@angular/router";
 })
 export class PrivateLibraryComponent implements OnInit {
 
-  categoriesList: Array<any> = [];
+  categoriesList: Array<any> = [
+    {
+      id: -1,
+      description: 'Todas'
+    }
+  ];
   myBooksList:  Array<any> = [];
   filterForm!: FormGroup;
+  userId!: string;
 
   constructor(private fb: FormBuilder,
               private categoryService: CategoryService,
               private libraryService: LibraryService,
               private router: Router) {
     this.buildForm();
+    this.userId = sessionStorage.getItem('userId')!.toString();
   }
 
   ngOnInit(): void {
+    const body = this.getBody();
+    this.getBooks(body);
     this.getCategories();
-    this.getBooks();
   }
 
-  buildForm() {
+  @AutoUnsubscribe()
+  buildForm(): Subscription {
     this.filterForm = this.fb.group({
       title: [''],
-      category: ['']
+      category: [[-1]]
+    });
+
+    return this.filterForm.valueChanges.subscribe(() => {
+      const body = this.getBody();
+      this.getBooks(body);
     });
   }
 
@@ -38,18 +54,24 @@ export class PrivateLibraryComponent implements OnInit {
     this.router.navigate(['/library/book/register']);
   }
 
-  getCategories() {
-    this.categoryService.getCategories().subscribe(categories => this.categoriesList = categories);
+  getBody(): FormGroup {
+    const body = this.filterForm.getRawValue();
+    const categoryValue = Number(body.category);
+    body.category = categoryValue === -1 ? [] : [categoryValue];
+    return body;
   }
 
-  getBooks() {
-    const body = this.filterForm.getRawValue();
-    this.libraryService.getFilterBooks(body).subscribe(result => this.myBooksList = result.items);
+  viewBook(event: any) {
+    this.router.navigate([`/library/book/view/${event.id}`]);
   }
 
-  filterBooks() {
-    const body = this.filterForm.getRawValue();
-    console.log('***************************' + body);
-    this.libraryService.getFilterBooks(body).subscribe(result => this.myBooksList = result.items);
+  @AutoUnsubscribe()
+  getCategories(): Subscription {
+    return this.categoryService.getCategories().subscribe(categories => this.categoriesList = this.categoriesList.concat(categories));
+  }
+
+  @AutoUnsubscribe()
+  getBooks(body: FormGroup): Subscription {
+    return this.libraryService.getFilterBooks(body).subscribe(result => this.myBooksList = result.items.filter((book: any ) => book.userRegister === this.userId));
   }
 }

@@ -7,14 +7,10 @@
 </div>
 <div>
   <form class="div-center library-margin" [formGroup]="filterForm">
-    <input id="title" type="text" formControlName="title" placeholder="Ej. Angular, React" (blur)="filterBooks()">
-    <select id="category" type="text" formControlName="category" (blur)="filterBooks()">
-      <option *ngFor="let category of categoriesList;">{{category.description}}</option>
+    <input id="title" type="text" formControlName="title" placeholder="Ej. Angular, React">
+    <select id="category" type="text" formControlName="category">
+      <option *ngFor="let category of categoriesList;" [value]="category.id">{{category.description}}</option>
     </select>
   </form>
 </div>
-<div class="div-center library-container">
-  <div *ngFor="let book of myBooksList;">
-    <img [src]="book.image" width="300" height="350">
-  </div>
-</div>
+<app-book-container [myBooks]="myBooksList" (clickImgEvent)="viewBook($event)"></app-book-container>

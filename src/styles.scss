@@ -1,9 +1,18 @@
 body {
   margin: 0 0 15px 0;
+  font-family: Prelo Light;
 }
 
 .medium-div {
   width: 50%;
+}
+
+.width-40 {
+  width: 40px;
+}
+
+.width-60 {
+  width: 60px;
 }
 
 .title {
@@ -137,6 +146,11 @@ body {
   }
 }
 
+.container-error {
+  display: flex;
+  flex-direction: column;
+}
+
 .text-error {
   color: red;
 }
@@ -147,4 +161,27 @@ body {
 
 .input-error {
   border: solid 1px red;
+}
+
+.view-book-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.view-book-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.view-book-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+
+  .width-60 {
+    margin-right: 30px;
+    font-weight: bold;
+  }
 }

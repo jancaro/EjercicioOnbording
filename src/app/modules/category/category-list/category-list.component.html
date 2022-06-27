@@ -1,0 +1,12 @@
+<div class="form-div">
+  <label class="form-title padding-title text-bold">Categorías</label>
+  <div class="div-center">
+    <div style="width: 150px; height: 50px;" *ngFor="let category of categoriesList; let i = index">
+      <input id="category-{{i}}" type="checkbox" (change)="changeCategory(category.id, $event)">
+      <label for="category-{{i}}">{{category.description}}</label>
+    </div>
+  </div>
+  <div *ngIf="category.length < 3">
+    <span class="text-note">Debe seleccionar al menos 3 categorías</span>
+  </div>
+</div>

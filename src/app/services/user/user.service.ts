@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {Observable, tap} from "rxjs";
 import {environment} from "../../../environments/environment";
 
 @Injectable({
@@ -19,6 +19,14 @@ export class UserService {
   }
 
   loginUser(body: any): Observable<any> {
-    return this.http.post(`${environment.baseUrl}/login`, body);
+    //rxjs tap
+    return this.http.post(`${environment.baseUrl}/users/login`, body).pipe(
+      tap((result: any) => {
+        sessionStorage.clear();
+        sessionStorage.setItem('tokenType', result.tokenType);
+        sessionStorage.setItem('token', result.access_token);
+        sessionStorage.setItem('userId', result.user.userId);
+      })
+    );
   }
 }

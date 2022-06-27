@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {BookModel} from "../../../models/book.model";
 
 @Component({
   selector: 'app-book-card',
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BookCardComponent implements OnInit {
 
+  @Input() bookModel!: BookModel;
+
+  @Output() clickEvent = new EventEmitter<any>();
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  clickImage(option: BookModel) {
+    this.clickEvent.emit(option);
   }
 
 }

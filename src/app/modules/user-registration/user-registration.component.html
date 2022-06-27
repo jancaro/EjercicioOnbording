@@ -29,11 +29,18 @@
       <input id="password" type="password" formControlName="password"
              [ngClass]="{'input-error' : password.errors && password.touched}"
              placeholder="****">
-      <div *ngIf="password.touched && password.invalid">
+      <div *ngIf="password.touched && password.errors?.['required']">
         <span class="text-error">Contraseña requerida</span>
       </div>
-      <div *ngIf="password.touched && password.errors?.['pattern']">
-        <span class="text-error">Debe tener al menos un caracter especial, una mayúscula, una minúscula y un dígito</span>
+      <div *ngIf="password.errors?.['minlength']">
+        <span class="text-error">Mínimo 8 caracteres</span>
+      </div>
+      <div class="container-error" *ngIf="password.touched && password.errors?.['pattern']">
+        <span class="text-error">Debe tener al menos:</span>
+        <span class="text-error">Un caracter especial</span>
+        <span class="text-error">Una mayúscula</span>
+        <span class="text-error">Una minúscula</span>
+        <span class="text-error">Un dígito</span>
       </div>
     </div>
 
@@ -42,25 +49,16 @@
       <input id="confirmPassword" type="password" formControlName="confirmPassword"
              [ngClass]="{'input-error' : confirmPassword.errors && confirmPassword.touched}"
              placeholder="****">
-      <div *ngIf="(confirmPassword.touched && confirmPassword.invalid) || password.value !== confirmPassword.value">
+      <div *ngIf="(confirmPassword.touched && confirmPassword.invalid) || registerForm.errors?.['passwordNotMatch']">
         <span class="text-error">Contraseñas no coinciden</span>
       </div>
     </div>
 
-    <div class="form-div">
-      <label class="form-title">Categorías</label>
-      <div *ngFor="let category of categoriesList; let i = index">
-        <input id="category-{{i}}" type="checkbox" (change)="changeCategory(category.description, $event)">
-        <label for="category-{{i}}">{{category.description}}</label>
-      </div>
-      <div *ngIf="categories.value.length < 3">
-        <span class="text-error">Debe seleccionar al menos 3 categorías</span>
-      </div>
-    </div>
+    <app-category-list (categoryArrays)="changeCategory($event)" [numElementsView]="5"></app-category-list>
 
     <div class="form-footer">
       <a routerLink="/login">Iniciar Sesión</a>
-      <pichincha-button size="small" id="idButton" color="primary" [disabled]="existUsername || registerForm.invalid"
+      <pichincha-button size="small" id="idButton" color="primary" [disabled]="existUsername || registerForm.invalid || categories.value.length < 3"
                         (clickbutton)="registerUser()">
         Registrar
       </pichincha-button>

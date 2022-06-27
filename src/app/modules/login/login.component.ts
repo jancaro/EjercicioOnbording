@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../../services/user/user.service";
 import {Router} from "@angular/router";
+import {Subscription} from "rxjs";
+import {AutoUnsubscribe} from "ngx-auto-unsubscribe-decorator";
 
 @Component({
   selector: 'app-login',
@@ -29,14 +31,15 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  verifyUsername() {
-    this.userService.verifyUsername(this.loginForm.get('username')?.value).subscribe(result => this.existUsername = result.exists);
+  @AutoUnsubscribe()
+  verifyUsername(): Subscription {
+    return this.userService.verifyUsername(this.loginForm.get('username')?.value).subscribe(result => this.existUsername = result.exists);
   }
 
-  login() {
+  @AutoUnsubscribe()
+  login(): Subscription {
     const body = this.loginForm.getRawValue();
-    this.userService.loginUser(body).subscribe( result => {
-      sessionStorage.setItem('token', result.access_token);
+    return this.userService.loginUser(body).subscribe( result => {
       this.loginForm.reset();
       this.router.navigate(['/library/private']);
     });

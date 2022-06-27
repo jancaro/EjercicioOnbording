@@ -14,7 +14,7 @@ const routes: Routes = [
     component: RegisterBookComponent
   },
   {
-    path: 'book/view',
+    path: 'book/view/:id',
     component: ViewBookComponent
   }
 ];

@@ -5,10 +5,12 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {TokenInterceptor} from "./interceptors/token.interceptor";
+import { ValidatorPasswordMatchingDirective } from './modules/directives/validator-password-matching.directive';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ValidatorPasswordMatchingDirective
   ],
   imports: [
     BrowserModule,

@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {CategoryService} from "../../../services/category/category.service";
 import {Router} from "@angular/router";
 import {LibraryService} from "../../../services/libray/library.service";
+import {Subscription} from "rxjs";
+import {AutoUnsubscribe} from "ngx-auto-unsubscribe-decorator";
 
 @Component({
   selector: 'app-register-book',
@@ -25,8 +27,9 @@ export class RegisterBookComponent implements OnInit {
     this.getCategories();
   }
 
-  getCategories() {
-    this.categoryService.getCategories().subscribe(categories => this.categoriesList = categories);
+  @AutoUnsubscribe()
+  getCategories(): Subscription {
+    return this.categoryService.getCategories().subscribe(categories => this.categoriesList = categories);
   }
 
   buildForm() {
@@ -37,24 +40,20 @@ export class RegisterBookComponent implements OnInit {
       image: ['', Validators.required],
       url: ['', Validators.required],
       public: [false, Validators.required],
-      category: this.fb.array([])
+      category: [[]]
     });
   }
 
-  changeCategory(description: string, event: any) {
-    if (event.target.checked) {
-      this.category.push(this.fb.control(description));
-    } else {
-      let indexCategory = this.category.value.findIndex((category: string) => category === description);
-      this.category.removeAt(indexCategory);
-    }
+  changeCategory(categories: any) {
+    this.registerBookForm.get('category')?.setValue(categories);
   }
 
-  registerBook() {
+  @AutoUnsubscribe()
+  registerBook(): Subscription {
     const body = this.registerBookForm.getRawValue();
-    this.libraryService.saveBook(body).subscribe(result => {
+    return this.libraryService.saveBook(body).subscribe(result => {
       this.registerBookForm.reset();
-      this.registerBookForm.get('category')?.reset();
+      this.cancel();
     });
   }
 
@@ -86,8 +85,8 @@ export class RegisterBookComponent implements OnInit {
     return this.registerBookForm.get('public') as FormControl;
   }
 
-  get category() : FormArray {
-    return this.registerBookForm.get('category') as FormArray;
+  get category() : FormControl {
+    return this.registerBookForm.get('category') as FormControl;
   }
 
 }

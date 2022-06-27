@@ -10,6 +10,10 @@ export class LibraryService {
 
   constructor(private http: HttpClient) { }
 
+  getBook(idBook: string): Observable<any> {
+    return this.http.get(`${environment.baseUrl}/books/owner/${idBook}`);
+  }
+
   getFilterBooks(body: any): Observable<any> {
     return this.http.post(`${environment.baseUrl}/books/filter`, body);
   }

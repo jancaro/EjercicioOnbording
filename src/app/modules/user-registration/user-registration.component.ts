@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import { UserService} from "../../services/user/user.service";
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {UserService} from "../../services/user/user.service";
 import {CategoryService} from "../../services/category/category.service";
+import {Subscription} from "rxjs";
+import {AutoUnsubscribe} from "ngx-auto-unsubscribe-decorator";
+import {passwordMatchingValidator} from "../directives/validator-password-matching.directive";
 
 @Component({
   selector: 'app-user-registration',
@@ -24,39 +27,37 @@ export class UserRegistrationComponent implements OnInit {
     this.getCategories();
   }
 
-  getCategories() {
-    this.categoryService.getCategories().subscribe(categories => this.categoriesList = categories);
+  @AutoUnsubscribe()
+  getCategories(): Subscription {
+    return this.categoryService.getCategories().subscribe(categories => this.categoriesList = categories);
   }
 
-  verifyUsername() {
-    this.userService.verifyUsername(this.registerForm.get('name')?.value).subscribe(result => this.existUsername = result.exists);
+  @AutoUnsubscribe()
+  verifyUsername(): Subscription {
+    return this.userService.verifyUsername(this.registerForm.get('name')?.value).subscribe(result => this.existUsername = result.exists);
   }
 
   buildForm() {
     this.registerForm = this.fb.group({
       name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.pattern("^[^@]+@[^@]+\\.[a-zA-Z]{2,}$")]],
       password: ['', [Validators.required, Validators.minLength(8),
         Validators.pattern("^(?=.*\\d)(?=.*[\u0021-\u002b\u003c-\u0040])(?=.*[A-Z])(?=.*[a-z])\\S{8,16}$")]],
       confirmPassword: ['', [Validators.required, Validators.minLength(8),
         Validators.pattern("^(?=.*\\d)(?=.*[\u0021-\u002b\u003c-\u0040])(?=.*[A-Z])(?=.*[a-z])\\S{8,16}$")]],
-      categories: this.fb.array([])
-    });
+      categories: [[]]
+    }, { validators: passwordMatchingValidator});
   }
 
-  changeCategory(description: string, event: any) {
-    if (event.target.checked) {
-      this.categories.push(this.fb.control(description));
-    } else {
-      let indexCategory = this.categories.value.findIndex((category: string) => category === description);
-      this.categories.removeAt(indexCategory);
-    }
+  changeCategory(categories: any) {
+    this.registerForm.get('categories')?.setValue(categories);
   }
 
-  registerUser() {
+  @AutoUnsubscribe()
+  registerUser(): Subscription {
     const body = this.registerForm.getRawValue();
     delete body.confirmPassword;
-    this.userService.registerUser(body).subscribe( result => this.registerForm.reset());
+    return this.userService.registerUser(body).subscribe(result => this.registerForm.reset());
   }
 
   get name(): FormControl {
@@ -75,8 +76,8 @@ export class UserRegistrationComponent implements OnInit {
     return this.registerForm.get('confirmPassword') as FormControl;
   }
 
-  get categories() : FormArray {
-    return this.registerForm.get('categories') as FormArray;
+  get categories(): FormControl {
+    return this.registerForm.get('categories') as FormControl;
   }
 
 }
