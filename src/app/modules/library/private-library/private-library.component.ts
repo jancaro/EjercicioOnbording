@@ -5,6 +5,8 @@ import {LibraryService} from "../../../services/libray/library.service";
 import {Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {AutoUnsubscribe} from "ngx-auto-unsubscribe-decorator";
+import {BookFilterModel} from "../../../models/bookFilter.model";
+import {CategoryModel} from "../../../models/category.model";
 
 @Component({
   selector: 'app-private-library',
@@ -13,7 +15,7 @@ import {AutoUnsubscribe} from "ngx-auto-unsubscribe-decorator";
 })
 export class PrivateLibraryComponent implements OnInit {
 
-  categoriesList: Array<any> = [
+  categoriesList: Array<CategoryModel> = [
     {
       id: -1,
       description: 'Todas'
@@ -22,6 +24,7 @@ export class PrivateLibraryComponent implements OnInit {
   myBooksList:  Array<any> = [];
   filterForm!: FormGroup;
   userId!: string;
+  filterFormModel!: BookFilterModel;
 
   constructor(private fb: FormBuilder,
               private categoryService: CategoryService,
@@ -72,6 +75,7 @@ export class PrivateLibraryComponent implements OnInit {
 
   @AutoUnsubscribe()
   getBooks(body: FormGroup): Subscription {
-    return this.libraryService.getFilterBooks(body).subscribe(result => this.myBooksList = result.items.filter((book: any ) => book.userRegister === this.userId));
+    this.filterFormModel = body.getRawValue();
+    return this.libraryService.getFilterBooks(this.filterFormModel).subscribe(result => this.myBooksList = result.items.filter((book: any ) => book.userRegister === this.userId));
   }
 }

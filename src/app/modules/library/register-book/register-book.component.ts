@@ -5,6 +5,7 @@ import {Router} from "@angular/router";
 import {LibraryService} from "../../../services/libray/library.service";
 import {Subscription} from "rxjs";
 import {AutoUnsubscribe} from "ngx-auto-unsubscribe-decorator";
+import {CategoryModel} from "../../../models/category.model";
 
 @Component({
   selector: 'app-register-book',
@@ -14,7 +15,7 @@ import {AutoUnsubscribe} from "ngx-auto-unsubscribe-decorator";
 export class RegisterBookComponent implements OnInit {
 
   registerBookForm!: FormGroup;
-  categoriesList: Array<any> = [];
+  categoriesList: Array<CategoryModel> = [];
 
   constructor(private fb: FormBuilder,
               private categoryService: CategoryService,
@@ -44,7 +45,7 @@ export class RegisterBookComponent implements OnInit {
     });
   }
 
-  changeCategory(categories: any) {
+  changeCategory(categories: Array<number>) {
     this.registerBookForm.get('category')?.setValue(categories);
   }
 

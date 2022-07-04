@@ -5,5 +5,6 @@ export interface BookModel {
   image: string,
   url: string,
   category: [],
-  public: boolean
+  public: boolean,
+  userRegister?: string
 }

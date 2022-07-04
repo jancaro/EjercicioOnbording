@@ -15,7 +15,7 @@ export class BookFormComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  changeCategory(categories: any) {
+  changeCategory(categories: Array<number>) {
     this.registerBookForm.get('category')?.setValue(categories);
   }
 

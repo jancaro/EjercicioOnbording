@@ -1,0 +1,17 @@
+.library-margin {
+  margin: 15px 10px;
+}
+
+.center-book-container {
+  padding: 0 50px;
+}
+
+.center-book-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+
+  pichincha-button {
+    margin: 5px;
+  }
+}

@@ -1,0 +1,12 @@
+.library-container {
+  background: gainsboro;
+
+  div {
+    margin: 7px;
+    background: whitesmoke;
+  }
+
+  div:hover img {
+    opacity: 0.5;
+  }
+}

@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {BookModel} from "../../../models/book.model";
 
 @Component({
   selector: 'app-book-container',
@@ -7,7 +8,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 })
 export class BookContainerComponent implements OnInit {
 
-  @Input() myBooks: Array<any> = [];
+  @Input() myBooks: Array<BookModel> = [];
 
   @Output() clickImgEvent = new EventEmitter<any>();
 

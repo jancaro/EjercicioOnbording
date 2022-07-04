@@ -11,6 +11,7 @@ import { RegisterBookComponent } from './register-book/register-book.component';
 import { ViewBookComponent } from './view-book/view-book.component';
 import {CategoryModule} from "../category/category.module";
 import { BookFormComponent } from './book-form/book-form.component';
+import { PublicLibraryComponent } from './public-library/public-library.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { BookFormComponent } from './book-form/book-form.component';
     BookContainerComponent,
     RegisterBookComponent,
     ViewBookComponent,
-    BookFormComponent
+    BookFormComponent,
+    PublicLibraryComponent
   ],
   imports: [
     CommonModule,

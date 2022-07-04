@@ -4,6 +4,7 @@ import {UserService} from "../../services/user/user.service";
 import {Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {AutoUnsubscribe} from "ngx-auto-unsubscribe-decorator";
+import {AlertService} from "../../services/alert/alert.service";
 
 @Component({
   selector: 'app-login',
@@ -14,10 +15,12 @@ export class LoginComponent implements OnInit {
 
   loginForm!: FormGroup;
   existUsername: boolean = false;
+  errorMessage!: string;
 
   constructor(private fb: FormBuilder,
               private userService: UserService,
-              private router: Router) {
+              private router: Router,
+              private messageService: AlertService) {
     this.buildForm();
   }
 
@@ -39,10 +42,12 @@ export class LoginComponent implements OnInit {
   @AutoUnsubscribe()
   login(): Subscription {
     const body = this.loginForm.getRawValue();
-    return this.userService.loginUser(body).subscribe( result => {
-      this.loginForm.reset();
-      this.router.navigate(['/library/private']);
-    });
+    return this.userService.loginUser(body).subscribe(
+      result => {
+        this.loginForm.reset();
+        this.router.navigate(['/library/private']);
+      },
+      errorResponse => this.messageService.add(errorResponse.error.message));
   }
 
   get username(): FormControl {

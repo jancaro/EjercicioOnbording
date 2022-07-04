@@ -1,6 +1,6 @@
 body {
   margin: 0 0 15px 0;
-  font-family: Prelo Light;
+  font-family: Prelo Light, serif;
 }
 
 .medium-div {
@@ -31,19 +31,7 @@ body {
   padding: 0 40%;
 }
 
-.center-book-container {
-  padding: 0 50px;
-}
 
-.center-book-footer {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-
-  pichincha-button {
-    margin: 5px;
-  }
-}
 
 .center-book-header {
   display: flex;
@@ -60,107 +48,6 @@ body {
   flex-direction: row;
   justify-content: space-between;
   flex-wrap: wrap;
-}
-
-.library-header {
-  background-color: #f4f0f061;
-  height: 50px;
-  align-items: center;
-
-  span {
-    margin: 0px 5px;
-  }
-}
-
-.library-container {
-  background: gainsboro;
-
-  div {
-    margin: 7px;
-    background: whitesmoke;
-  }
-
-  div:hover img {
-    opacity: 0.5;
-  }
-}
-
-.library-margin {
-  margin: 15px 10px;
-}
-
-.form-register {
-  border: solid 1px gray;
-}
-
-.form-title {
-  padding: 5px 7px;
-  margin: 0;
-  font-size: larger;
-}
-
-.form-hr {
-  margin: 3px 7px;
-}
-
-.form-div {
-  display: flex;
-  flex-direction: column;
-  padding: 5px 7px;
-
-  label {
-    padding: 3px 0;
-  }
-
-  input {
-    margin-bottom: 5px;
-  }
-}
-
-.form-div-checkbox {
-  display: flex;
-  flex-direction: row;
-  padding: 5px 7px;
-
-  label {
-    padding: 3px 0;
-  }
-
-  input {
-    margin-bottom: 5px;
-  }
-}
-
-.form-footer {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  background-color: #f3ecec;
-
-  a {
-    margin: 12px 5px;
-  }
-
-  pichincha-button {
-    margin: 5px;
-  }
-}
-
-.container-error {
-  display: flex;
-  flex-direction: column;
-}
-
-.text-error {
-  color: red;
-}
-
-.text-note {
-  color: gray;
-}
-
-.input-error {
-  border: solid 1px red;
 }
 
 .view-book-container {

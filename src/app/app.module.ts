@@ -6,6 +6,7 @@ import {AppComponent} from './app.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {TokenInterceptor} from "./interceptors/token.interceptor";
 import { ValidatorPasswordMatchingDirective } from './modules/directives/validator-password-matching.directive';
+import {AlertModule} from "./modules/alert/alert.module";
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { ValidatorPasswordMatchingDirective } from './modules/directives/validat
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    AlertModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true
